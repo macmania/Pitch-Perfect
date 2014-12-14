@@ -161,6 +161,7 @@
 				TargetAttributes = {
 					DB5C82931A3D491C00F0B3B6 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = UD8575AP25;
 					};
 					DB5C82A81A3D491C00F0B3B6 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -405,6 +406,7 @@
 				DB5C82B51A3D491C00F0B3B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB5C82B61A3D491C00F0B3B6 /* Build configuration list for PBXNativeTarget "PitchPerfectTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +415,7 @@
 				DB5C82B81A3D491C00F0B3B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
