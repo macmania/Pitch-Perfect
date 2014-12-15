@@ -14,11 +14,33 @@ class PlaySoundsViewController: UIViewController {
     var filePath = NSBundle.mainBundle().pathForResource("movie_quote", ofType:"mp3")
     
     
+    //Path of the recording file
+    func audioRecordingPath() -> NSURL{
+        
+        let fileManager = NSFileManager()
+        
+        let documentsFolderUrl = fileManager.URLForDirectory(.DocumentDirectory,
+            inDomain: .UserDomainMask,
+            appropriateForURL: nil,
+            create: false,
+            error: nil)
+        
+        return documentsFolderUrl!.URLByAppendingPathComponent("Recording.m4a")
+        
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var playbackError:NSError?
+
         var fileUrl = NSURL(fileURLWithPath:filePath!);
-        player = AVAudioPlayer(contentsOfURL: fileUrl, error: nil)
+        let fileData = NSData(contentsOfURL: audioRecordingPath(),
+            options: .MappedRead,
+            error: nil)
+        player = AVAudioPlayer(data: fileData, error:&playbackError )
         player.prepareToPlay()
         player.enableRate = true
         // Do any additional setup after loading the view.

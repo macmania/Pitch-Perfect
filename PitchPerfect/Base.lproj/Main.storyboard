@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wHX-wi-R0L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wHX-wi-R0L">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -125,9 +126,6 @@
                                 <state key="normal" image="slow">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="46" y="112" width="93" height="91"/>
-                                </variation>
                                 <connections>
                                     <action selector="PlaySoundSlow:" destination="nz3-Nv-qq7" eventType="touchUpInside" id="eLB-GE-0En"/>
                                 </connections>
@@ -137,9 +135,6 @@
                                 <state key="normal" image="fast">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="262" y="112" width="94" height="91"/>
-                                </variation>
                                 <connections>
                                     <action selector="playSoundFast:" destination="nz3-Nv-qq7" eventType="touchUpInside" id="cuu-2L-JH9"/>
                                 </connections>
@@ -173,11 +168,11 @@
                             <mask key="constraints">
                                 <exclude reference="1Y0-cZ-Rkr"/>
                                 <exclude reference="Ql2-By-ZaK"/>
+                                <exclude reference="nQ8-WM-sIp"/>
+                                <exclude reference="u2k-ai-T1C"/>
                                 <exclude reference="Eww-aH-9hB"/>
                                 <exclude reference="OXZ-Fn-4vZ"/>
                                 <exclude reference="VZH-4X-MnS"/>
-                                <exclude reference="nQ8-WM-sIp"/>
-                                <exclude reference="u2k-ai-T1C"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -189,11 +184,11 @@
                             <mask key="constraints">
                                 <include reference="1Y0-cZ-Rkr"/>
                                 <include reference="Ql2-By-ZaK"/>
+                                <include reference="nQ8-WM-sIp"/>
+                                <include reference="u2k-ai-T1C"/>
                                 <include reference="Eww-aH-9hB"/>
                                 <include reference="OXZ-Fn-4vZ"/>
                                 <exclude reference="VZH-4X-MnS"/>
-                                <include reference="nQ8-WM-sIp"/>
-                                <include reference="u2k-ai-T1C"/>
                             </mask>
                         </variation>
                     </view>

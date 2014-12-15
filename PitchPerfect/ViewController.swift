@@ -68,24 +68,6 @@ class ViewController: UIViewController,
                     options: .MappedRead,
                     error: &readingError)
                 
-                /* Form an audio player and make it play the recorded data */
-                audioPlayer = AVAudioPlayer(data: fileData, error: &playbackError)
-                
-                /* Could we instantiate the audio player? */
-                if let player = audioPlayer{
-                    player.delegate = self
-                    
-                    /* Prepare to play and start playing */
-                    if player.prepareToPlay() && player.play(){
-                        println("Started playing the recorded audio")
-                    } else {
-                        println("Could not play the audio")
-                    }
-                    
-                } else {
-                    println("Failed to create an audio player")
-                }
-                
             } else {
                 println("Stopping the audio recording failed")
             }
@@ -143,18 +125,6 @@ class ViewController: UIViewController,
             
             if recorder.prepareToRecord() && recorder.record(){
                 
-                println("Successfully started to record.")
-                
-                /* After 5 seconds, let's stop the recording process */
-                let delayInSeconds = 5.0
-                let delayInNanoSeconds =
-                dispatch_time(DISPATCH_TIME_NOW,
-                    Int64(delayInSeconds * Double(NSEC_PER_SEC)))
-                
-                dispatch_after(delayInNanoSeconds, dispatch_get_main_queue(), {
-                    [weak self] in
-                    self!.audioRecorder!.stop()
-                })
                 
             } else {
                 println("Failed to record.")
@@ -189,21 +159,45 @@ class ViewController: UIViewController,
    
     @IBAction func RecordAudio(sender: UIButton) {
         viewRecordUpdate()
-        
-        let bundle = NSBundle.mainBundle()
         var error: NSError?
         let session = AVAudioSession.sharedInstance()
-        if session.setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions:.DuckOthers, error: &error){
-            if session.setActive(true, error:nil){
+    
+        if session.setCategory(AVAudioSessionCategoryPlayAndRecord,
+            withOptions: .DuckOthers,
+            error: &error){
                 
+                if session.setActive(true, error: nil){
+                    println("Successfully activated the audio session")
+                    
+                    session.requestRecordPermission{[weak self](allowed: Bool) in
+                        
+                        if allowed{
+                            self!.startRecordingAudio()
+                        } else {
+                            println("We don't have permission to record audio");
+                        }
+                        
+                    }
+                } else {
+                    println("Could not activate the audio session")
+                }
+                
+        } else {
+            
+            if let theError = error{
+                println("An error occurred in setting the audio " +
+                    "session category. Error = \(theError)")
             }
+            
         }
-        
     }
+
+    
     
 
     @IBAction func stopAudio(sender: UIButton) {
         viewStopAudioUpdate()
+        self.audioRecorder!.stop()
     }
     
     
