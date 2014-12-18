@@ -14,13 +14,15 @@ class ViewController: UIViewController,
 {
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
-    var recorder = [
-        AVFormatIDKey: kAudioFormatAppleLossless,
-        AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
-        AVEncoderBitRateKey : 320000,
-        AVNumberOfChannelsKey: 2,
-        AVSampleRateKey : 44100.0
-    ]
+//    var recorder = [
+//        AVFormatIDKey: kAudioFormatAppleLossless,
+//        AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
+//        AVEncoderBitRateKey : 320000,
+//        AVNumberOfChannelsKey: 2,
+//        AVSampleRateKey : 44100.0
+//    ]
+    
+    var recordedAudio:RecordedAudio!
     
     @IBOutlet weak var recordingInProgress: UILabel!;
     @IBOutlet weak var stopButton: UIButton!;
@@ -56,41 +58,41 @@ class ViewController: UIViewController,
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!,
         successfully flag: Bool){
             
+            //this means that the recorded was successful
             if flag{
+                recordedAudio = RecordedAudio()
+                recordedAudio.filePathUrl = recorder.url
+                recordedAudio.title = recorder.url.lastPathComponent
                 
+                //stopRecording is the id
+                
+                self.performSegueWithIdentifier("stopRecord", sender: recordedAudio);
                 println("Successfully stopped the audio recording process")
                 
                 /* Let's try to retrieve the data for the recorded file */
                 var playbackError:NSError?
                 var readingError:NSError?
                 
-                let fileData = NSData(contentsOfURL: audioRecordingPath(),
-                    options: .MappedRead,
-                    error: &readingError)
-                
             } else {
                 println("Stopping the audio recording failed")
+                recordingButton.enabled = true;
+                stopButton.hidden = true;
             }
             
-            /* Here we don't need the audio recorder anymore */
-            self.audioRecorder = nil;
             
     }
     
-    func audioRecordingPath() -> NSURL{
-        
-        let fileManager = NSFileManager()
-        
-        let documentsFolderUrl = fileManager.URLForDirectory(.DocumentDirectory,
-            inDomain: .UserDomainMask,
-            appropriateForURL: nil,
-            create: false,
-            error: nil)
-        
-        return documentsFolderUrl!.URLByAppendingPathComponent("Recording.m4a")
-        
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if(segue.identifier == "stopRecord"){
+            let playSoundsVC:PlaySoundsViewController = segue.destinationViewController as PlaySoundsViewController
+            let data = sender as RecordedAudio
+            playSoundsVC.receivedAudio = data
+        }
+        else{
+            println("segue unsuccessful")
+        }
+
     }
-    
     
     func audioRecordingSettings() -> NSDictionary{
         
@@ -111,29 +113,33 @@ class ViewController: UIViewController,
     func startRecordingAudio(){
         
         var error: NSError?
+        var recordedAudio:AVAudioRecorder!
         
-        let audioRecordingURL = self.audioRecordingPath()
+        //directory path
+        let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
         
-        audioRecorder = AVAudioRecorder(URL: audioRecordingURL,
-            settings: audioRecordingSettings(),
-            error: &error)
+        let currentDateTime = NSDate()
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "ddMMyyyy-HHmmss"
+        let recordingName = formatter.stringFromDate(currentDateTime)
+        let pathArray = [dirPath, recordingName]
+        let filePath = NSURL.fileURLWithPathComponents(pathArray)
+        println("file path", filePath)
         
-        if let recorder = audioRecorder{
-            
-            recorder.delegate = self
-            /* Prepare the recorder and then start the recording */
-            
-            if recorder.prepareToRecord() && recorder.record(){
-                
-                
-            } else {
-                println("Failed to record.")
-                audioRecorder = nil
-            }
-            
-        } else {
-            println("Failed to create an instance of the audio recorder")
-        }
+        var session = AVAudioSession.sharedInstance()
+        session.setCategory(AVAudioSessionCategoryPlayAndRecord, error:nil)
+        
+        audioRecorder = AVAudioRecorder(URL:filePath, settings: nil, error: nil)
+        audioRecorder?.delegate = self
+        audioRecorder?.meteringEnabled = true
+        audioRecorder?.prepareToRecord()
+        audioRecorder?.record()
+        
+        
+
+        
+        
+        
         
     }
 
