@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wHX-wi-R0L">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="wHX-wi-R0L">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -148,10 +148,24 @@
                                     <action selector="stopSound:" destination="nz3-Nv-qq7" eventType="touchUpInside" id="Lbu-a1-qs4"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fY7-ho-g8K">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="chipmunk">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="46" y="349" width="100" height="100"/>
+                                </variation>
+                                <connections>
+                                    <action selector="playChipmunkAudio:" destination="nz3-Nv-qq7" eventType="touchUpInside" id="shL-3h-hqP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="X1Y-g2-H9k" firstAttribute="top" secondItem="xVF-EP-NhC" secondAttribute="bottom" constant="48" id="1Y0-cZ-Rkr"/>
+                            <constraint firstAttribute="centerX" secondItem="fY7-ho-g8K" secondAttribute="centerX" constant="104" id="3Lh-P1-YFg"/>
+                            <constraint firstAttribute="centerY" secondItem="fY7-ho-g8K" secondAttribute="centerY" constant="-98" id="8FQ-p7-1XE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zam-oG-3K4" secondAttribute="trailing" constant="28" id="Eww-aH-9hB"/>
                             <constraint firstItem="Zam-oG-3K4" firstAttribute="top" secondItem="xVF-EP-NhC" secondAttribute="bottom" constant="48" id="OXZ-Fn-4vZ"/>
                             <constraint firstItem="X1Y-g2-H9k" firstAttribute="leading" secondItem="78E-yn-lp4" secondAttribute="leadingMargin" constant="30" id="Ql2-By-ZaK"/>
@@ -164,6 +178,7 @@
                                 <exclude reference="X1Y-g2-H9k"/>
                                 <exclude reference="Zam-oG-3K4"/>
                                 <exclude reference="Yh3-0b-Bc7"/>
+                                <exclude reference="fY7-ho-g8K"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="1Y0-cZ-Rkr"/>
@@ -173,6 +188,8 @@
                                 <exclude reference="Eww-aH-9hB"/>
                                 <exclude reference="OXZ-Fn-4vZ"/>
                                 <exclude reference="VZH-4X-MnS"/>
+                                <exclude reference="3Lh-P1-YFg"/>
+                                <exclude reference="8FQ-p7-1XE"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -180,6 +197,7 @@
                                 <include reference="X1Y-g2-H9k"/>
                                 <include reference="Zam-oG-3K4"/>
                                 <include reference="Yh3-0b-Bc7"/>
+                                <include reference="fY7-ho-g8K"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="1Y0-cZ-Rkr"/>
@@ -189,6 +207,8 @@
                                 <include reference="Eww-aH-9hB"/>
                                 <include reference="OXZ-Fn-4vZ"/>
                                 <exclude reference="VZH-4X-MnS"/>
+                                <include reference="3Lh-P1-YFg"/>
+                                <include reference="8FQ-p7-1XE"/>
                             </mask>
                         </variation>
                     </view>
@@ -217,6 +237,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chipmunk" width="100" height="100"/>
         <image name="fast" width="100" height="100"/>
         <image name="microphone" width="100" height="100"/>
         <image name="slow" width="100" height="100"/>
