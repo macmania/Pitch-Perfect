@@ -10,50 +10,14 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController,
-    AVAudioRecorderDelegate, AVAudioPlayerDelegate
+    AVAudioRecorderDelegate
 {
     var audioRecorder: AVAudioRecorder?
-    var audioPlayer: AVAudioPlayer?
-//    var recorder = [
-//        AVFormatIDKey: kAudioFormatAppleLossless,
-//        AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
-//        AVEncoderBitRateKey : 320000,
-//        AVNumberOfChannelsKey: 2,
-//        AVSampleRateKey : 44100.0
-//    ]
-    
     var recordedAudio:RecordedAudio!
     
     @IBOutlet weak var recordingInProgress: UILabel!;
     @IBOutlet weak var stopButton: UIButton!;
     @IBOutlet weak var recordingButton: UIButton!;
-    
-    
-    func audioPlayerBeginInterruption(player: AVAudioPlayer!) {
-        
-    }
-    
-    func audioPlayerEndInterruption(player: AVAudioPlayer!,
-        withOptions flags: Int) {
-            if flags == AVAudioSessionInterruptionFlags_ShouldResume{
-                player.play()
-            }
-    }
-    
-    
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!,
-        successfully flag: Bool){
-            
-            if flag{
-                println("Audio player stopped correctly")
-            } else {
-                println("Audio player did not stop correctly")
-            }
-            
-            audioPlayer = nil
-            
-    }
-    
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!,
         successfully flag: Bool){
@@ -63,8 +27,6 @@ class ViewController: UIViewController,
                 recordedAudio = RecordedAudio()
                 recordedAudio.filePathUrl = recorder.url
                 recordedAudio.title = recorder.url.lastPathComponent
-                
-                //stopRecording is the id
                 
                 self.performSegueWithIdentifier("stopRecord", sender: recordedAudio);
                 println("Successfully stopped the audio recording process")
@@ -83,7 +45,7 @@ class ViewController: UIViewController,
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if(segue.identifier == "stopRecord"){
+        if(segue.identifier == "stopRecord"){ //Segue id
             let playSoundsVC:PlaySoundsViewController = segue.destinationViewController as PlaySoundsViewController
             let data = sender as RecordedAudio
             playSoundsVC.receivedAudio = data
@@ -111,7 +73,6 @@ class ViewController: UIViewController,
     
     
     func startRecordingAudio(){
-        
         var error: NSError?
         var recordedAudio:AVAudioRecorder!
         
@@ -134,13 +95,6 @@ class ViewController: UIViewController,
         audioRecorder?.meteringEnabled = true
         audioRecorder?.prepareToRecord()
         audioRecorder?.record()
-        
-        
-
-        
-        
-        
-        
     }
 
     
@@ -159,7 +113,6 @@ class ViewController: UIViewController,
     override func viewWillAppear(animated: Bool) {
         stopButton.hidden=true;
         recordingButton.enabled = true;
-        println("el");
     }
 
    
@@ -198,15 +151,11 @@ class ViewController: UIViewController,
         }
     }
 
-    
-    
 
     @IBAction func stopAudio(sender: UIButton) {
         viewStopAudioUpdate()
         self.audioRecorder!.stop()
     }
-    
-    
     
     /** Helper functions to update the view based on the user's actions **/
     func viewRecordUpdate() {
@@ -218,7 +167,6 @@ class ViewController: UIViewController,
     func viewStopAudioUpdate() {
         recordingInProgress.hidden = true;
         recordingButton.enabled = true;
-        
     }
     
 }
